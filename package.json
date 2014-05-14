@@ -1,0 +1,30 @@
+{
+  "name": "socks-wrapper",
+  "description": "Wrapping net.Socket to work with SOCKS proxies",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Weidong Fang <wdfang@gmail.com>",
+  "tags": [
+    "socket",
+    "socks",
+    "http",
+    "https",
+    "socks 4a",
+    "socks 4",
+    "wrapper class"
+  ],
+  "bugs": {
+    "url": "https://github.com/fangwd/socks-wrapper/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fangwd/socks-wrapper.git"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "node tests/run.js"
+  },
+  "licenses": "MIT"
+}
