@@ -4,6 +4,7 @@ var http = require('http');
 var net  = require('net');
 var tls  = require('tls');
 var util = require('util');
+var https = require('https');
 
 function getArgs(args) {
   var res = [9050, 'localhost'];
@@ -79,7 +80,7 @@ function SocksWrapper() {
         self._handle.owner = self;
         self.readable      = socket.readable;
         self.writable      = socket.writable;
-        self._connecting   = false;
+        self.connecting    = false;
         
         self.emit('connect');
       }
@@ -87,7 +88,7 @@ function SocksWrapper() {
   }
   
   this.connect = function(options) {
-    this._connecting = true;
+    this.connecting = true;
     socket.connect(args[0], args[1], function() {
       var socksRequest = createSocksRequest(options.port, options.host);
       socket.write(socksRequest);
@@ -113,7 +114,7 @@ util.inherits(exports.HttpAgent, http.Agent);
 
 exports.HttpsAgent = function() {
   var args = getArgs(arguments);
-  http.Agent.call(this, args[2]);
+  https.Agent.call(this, args[2]);
   this.createConnection = function(options) {
     options.port = options.port || 443;
     options.socket = new SocksWrapper(args[0], args[1]).connect(options);
