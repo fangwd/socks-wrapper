@@ -25,7 +25,7 @@ function getArgs(args) {
 
 function SocksWrapper() {
   var args = getArgs(arguments);
-  
+
   net.Socket.call(this, args[3]);
 
   var self          = this,
@@ -63,15 +63,13 @@ function SocksWrapper() {
     
     return data;
   }
-
-  exports.SocksWrapper = SocksWrapper;
   
   function handleSocksResponse(data) {
     socksResponse = socksResponse ? Buffer.concat(socksResponse, data) : data;
-    
     if (socksResponse.length >= 8) {
       if (socksResponse[1] != 0x5A) {
         socket.destroy();
+        self.emit('error', { code: socksResponse[1] } )
       }
       else {
         socket.removeListener('data', handleSocksResponse);
@@ -94,10 +92,14 @@ function SocksWrapper() {
       socket.write(socksRequest);
       socket.on('data', handleSocksResponse);
     });
+
+    socket.on('error', err => { this.emit('error', err) });
     
     return this;
   }
 }
+
+exports.SocksWrapper = SocksWrapper;
 
 util.inherits(SocksWrapper, net.Socket);
 
@@ -123,3 +125,4 @@ exports.HttpsAgent = function() {
 }
 
 util.inherits(exports.HttpsAgent, http.Agent);
+
