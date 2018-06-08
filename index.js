@@ -124,5 +124,5 @@ exports.HttpsAgent = function() {
   }
 }
 
-util.inherits(exports.HttpsAgent, http.Agent);
+util.inherits(exports.HttpsAgent, https.Agent);
 
