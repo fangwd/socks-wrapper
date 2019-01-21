@@ -206,10 +206,11 @@ util.inherits(exports.HttpAgent, http.Agent);
 
 exports.HttpsAgent = function(port, host, options) {
   https.Agent.call(this, options);
-  this.createConnection = function(options) {
-    options.port = options.port || 443;
-    options.socket = new Socks5Wrapper(port, host).connect(options);
-    return tls.connect(options)
+  this.addRequest = (req, opts) => {
+    req._last = true;
+    req.shouldKeepAlive = false;
+    const socket = tls.connect({ serverName: opts.hostname, rejectUnauthorized: opts.rejectUnauthorized, socket: new Socks5Wrapper(port, host).connect(opts) })
+    req.onSocket(socket)
   }
 }
 
