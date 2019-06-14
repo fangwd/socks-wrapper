@@ -209,7 +209,7 @@ exports.HttpsAgent = function(port, host, options) {
   this.addRequest = (req, opts) => {
     req._last = true;
     req.shouldKeepAlive = false;
-    const socket = tls.connect({ serverName: opts.hostname, rejectUnauthorized: opts.rejectUnauthorized, socket: new Socks5Wrapper(port, host).connect(opts) })
+    const socket = tls.connect({ servername: opts.hostname, rejectUnauthorized: opts.rejectUnauthorized, socket: new Socks5Wrapper(port, host).connect(opts) })
     req.onSocket(socket)
   }
 }

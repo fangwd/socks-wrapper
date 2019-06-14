@@ -1,7 +1,7 @@
 {
   "name": "socks-wrapper",
   "description": "Wrapping net.Socket to work with SOCKS proxies",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "main": "index.js",
   "author": "Weidong Fang <wdfang@gmail.com>",
   "tags": [
